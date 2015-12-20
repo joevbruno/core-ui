@@ -8,7 +8,7 @@ var coreUI = {
   },
   registerComponents: function(obj) {
     Object.keys(obj).map(function(component) {
-      coreUI.registerComponent(component, object[component]);
+      coreUI.registerComponent(component, obj[component]);
     });
   },
   getComponents: function() {
