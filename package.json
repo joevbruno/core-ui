@@ -1,6 +1,6 @@
 {
   "name": "core-ui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Core UI is a dead-simple wrapper around your (React) component library, which aims to provide two benefits: simple, flat paths for import statements and 'switchable' presentational components",
   "main": "index.js",
   "scripts": {
