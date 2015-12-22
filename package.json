@@ -4,7 +4,7 @@
   "description": "Core UI is a dead-simple wrapper around your (React) component library, which aims to provide two benefits: simple, flat paths for import statements and 'switchable' presentational components",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./__tests__"
   },
   "keywords": [
     "React",
@@ -23,5 +23,9 @@
   "license": "MIT",
   "dependencies": {
     "object-assign": "^4.0.1"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
   }
 }

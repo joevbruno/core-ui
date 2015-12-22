@@ -6,27 +6,27 @@ On [github](https://github.com/joevbruno/core-ui)
 
 # Usage 
 
-### Step 1: Create Config
+### Step 1: Setup
 
 ```
 npm install --save core-ui
 
 ```
 
-Imagine a file with a path of `utils/config.js` that look like this:
++ Create a registeration file (e.g. `utils/compRegister.js`).
++ Import `registerComponents` from `core-ui`
++ Import all components you wish to register.
++ Create an object from your imported components
++ call registerComponents, passing in your object of components.
 
 ```
 import { registerComponents } from 'core-ui';
 import AppBar from 'react-toolbox/lib/app_bar';
-import Autocomplete from 'some/other/place/or/the/same/place/locally/or/in/node_modules';
+import Autocomplete from 'some/other/place';
 
-// ...
-// other 'core' components
-// ...
+....
 
-// now build an object with all your components
-// you could imagine this being in an if block that is set dynamically based upon an ENV variable
-// or more simply requiring a separate file
+// little helper from ES6
 const appUI = {
   AppBar,
   Autocomplete,
@@ -39,8 +39,10 @@ registerComponents(appUI);
 
 ### Step #2: Require the file in your main 'app.js' or 'index.js' file
 
+The file needs to be imported before any register components are needed.
+
 ```
-import AppComponents from './utils/config';
+import AppComponents from './utils/compRegister';
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
@@ -50,33 +52,12 @@ import { createStore, applyMiddleware } from 'redux';
 
 ### Step #3: Profit
 
-Now we can easily require our components.
+Now we can easily require our components wherever we need them within the application without worring about paths.
 
 ```
 import React from 'react';
-import { AppBar}  from 'core-ui';
-import { NavMenu }  from 'core-ui';
-import { Hamburger } from 'core-ui';
-
+import { AppBar, NavMenu, Hamburger}  from 'core-ui';
 ...
-
-export default class Navigation extends React.Component {
-  static propTypes = {
-    navigationLinks: React.PropTypes.array
-  };
-  constructor(...args) {
-    super(...args);
-    this.state = {
-      isHamburgerActive: false,
-      isDrawerActive: false
-    };
-  }
-  toggleOffCanvasNav = () => {
-    this.setState({
-      isHamburgerActive: !this.state.isHamburgerActive,
-      isDrawerActive: !this.state.isDrawerActive
-    });
-  };
   render() {
     return (
       <AppBar className={style.appbar}>
@@ -90,30 +71,28 @@ export default class Navigation extends React.Component {
       </AppBar>
     );
   }
-}
-
 ```
 ### Step #4: Time Changes All Things
 
-Once upon a time, a team decided to make a change. Someone wrote a killer new AppBar component (probably not, but you could imagine something like a table or multiselect control here), and it was decided that it was time to introduce this new control. 
+Image one of the following situations: 
 
-Modify `utils/config.js`:
++ Someone wrote a killer new Table component, and your team intends to use this new Table component throughout our application. 
++ Your project undergoes some file and directory restructoring.
 
-```
-import AppBar from 'SOME/NEW/LOCATION';
-
-// everything else is the same!
-// if the new control has a different API, simply import a file that wraps the new control and provides a bridge to the new component by accepting new props, making modifications and passing those new props to the new component.
+In the latter situation, components using `core-ui` will not be effected because they are not dependent upon relative paths. In the former scenario (introducing a new Component, or replacing an existing one), we simply need to modify our `utils/compRegister.js` file:
 
 ```
+import Table from 'SOME/NEW/LOCATION';
+```
+
+Notice, everything else is the same. We only needed to change one line to start using our new Table component! Also, note that we are simply importing a file. That file can do whatever we need it to do, including any API 'bridging' that may need to take place between the 'old' and 'new' components.
 
 ### Step #5: Repeat as Needed.
 Sweet!
 
-
 # TODO 
- + Add example
- + Add tests
+ + Add example (link to another project using core-ui coming soon)
+ + ~~Add tests~~
 
 # Contribute
-Please contribute. If you can make this better, submit a PR.
+If you can make this better, please submit a PR.
