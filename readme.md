@@ -12,21 +12,30 @@ On [github](https://github.com/joevbruno/core-ui)
 npm install --save core-ui
 
 ```
+Let's say you have project with something like the following strucuture (purely for reference sake).
 
-+ Create a registeration file (e.g. `utils/compRegister.js`).
-+ Import `registerComponents` from `core-ui`
-+ Import all components you wish to register.
-+ Create an object from your imported components
-+ call registerComponents, passing in your object of components.
+```
+app.js
+|__api
+|__actions
+|__components
+|__containers
+|__constants
+|__reducers
+|__utils
+
+````
+
++ Create a registeration file (e.g. `utils/compRegister.js`). That file should look something like this:
 
 ```
 import { registerComponents } from 'core-ui';
 import AppBar from 'react-toolbox/lib/app_bar';
 import Autocomplete from 'some/other/place';
-
+// all other components
 ....
 
-// little helper from ES6
+// add your imported components to an object
 const appUI = {
   AppBar,
   Autocomplete,
@@ -36,18 +45,28 @@ const appUI = {
 registerComponents(appUI);
 ```
 
++ Import `registerComponents` from `core-ui`
++ Import all components you wish to register.
++ Create an object from your imported components
++ call registerComponents, passing in your object of components.
 
-### Step #2: Require the file in your main 'app.js' or 'index.js' file
+### Step #2: Require the file in your main 'app.js' file
 
-The file needs to be imported before any register components are needed.
+Your `compRegister` file needs to be loaded before your app begins to look for components in `core-ui`. Thus, it should probably be the first file `import` or `require` in your main app.js file. We only need to include it at this point. We won't be doing anything with it. If we need to add more components or remove components, we can do that manually by editing our `utils/compRegister` file or via the API:
+
++ registerComponent(name, comp)
++ unregisterComponent(name)
++ registerComponents(obj)
++ getComponents() 
 
 ```
-import AppComponents from './utils/compRegister';
+// app.js
+require('./utils/compRegister');
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 ...
-
+render(<App/>, getElementById('app'));
 ```
 
 ### Step #3: Profit
