@@ -1,3 +1,5 @@
+var assign = require('object-assign');
+
 var coreUI = {
   registerComponent: function(name, src) {
     if (coreUI[name]) {
@@ -6,15 +8,19 @@ var coreUI = {
     coreUI[name] = src;
     return coreUI;
   },
+  unregisterComponent: function(name) {
+    delete coreUI[name];
+    return coreUI;
+  },
   registerComponents: function(obj) {
     Object.keys(obj).map(function(component) {
       coreUI.registerComponent(component, obj[component]);
     });
   },
   getComponents: function() {
-    var components = coreUI;
+    var components = Object.assign({}, coreUI);
     delete components.registerComponent;
-    delete components.registerComponents;
+    delete components.registerdComponents;
     delete components.getComponents;
     return components;
   } 

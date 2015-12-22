@@ -20,5 +20,8 @@
   },
   "homepage": "https://github.com/joevbruno/core-ui",
   "author": "Joe Bruno <joevbruno@me.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "object-assign": "^4.0.1"
+  }
 }
